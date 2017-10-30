@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Success</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'wishlist/style.css' %}">
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="">
+        Welcome, {{current_user.name}}!
+      </div>
+
+      <div class="loginout">
+
+         <a href="/logout">Logout</a>
+      </div>
+
+      <div>
+<h3>My wish list</h3>
+<table>
+<thead>
+<th>Item </th>
+<th>Created by </th>
+<th>Date added </th>
+<th>Action </th>
+</thead>
+{% if items %}
+<tbody>
+
+  {% for item in items %}
+    <tr>
+      <td><a href="/display/{{item.id}}">{{item.item}}</a></td>
+      <td>{{item.creator.name}}</td>
+      <td>{{item.created_at}}</td>
+      {% if item.creator.id == theuser.id%}
+      <td><a href="/delete/{{item.id}}">Delete Item</a></td>
+      {% else%}
+      <td><a href="/remove/{{item.id}}">Remove from  wishlist</a></td>
+      {% endif %}
+    </tr>
+  {% endfor %}
+</tbody>
+{% endif %}
+</table>
+
+</div>
+
+<div>
+<h3>Other user's wish list</h3>
+<table>
+<thead>
+<th>Item </th>
+<th>Created by </th>
+<th>Date added </th>
+<th>Action </th>
+</thead>
+{% if allitem %}
+<tbody>
+
+  {% for item in allitem %}
+    <tr>
+      <td><a href="/display/{{item.id}}">{{item.item}}</a></td>
+      <td>{{item.creator.name}}</td>
+      <td>{{item.created_at}}</td>
+      <td><a href="/addthis/{{item.id}}">Add to wishlist</a></td>
+    </tr>
+  {% endfor %}
+</tbody>
+{% endif %}
+</table>
+
+
+
+</div>
+         <div class="loginout" >
+         <a href="/additem">Add Item</a>
+       </div>
+    </div>
+  </body>
+</html>
